@@ -12,6 +12,7 @@ A collection of Low-Level Design (LLD) mini-projects in Python, each demonstrati
 | [ridesharing](ridesharing/) | Ride-hailing system with pluggable matching and pricing | Strategy Pattern, State Machine, Decorator | Yes |
 | [oop-examples](oop-examples/) | OOP principle demos: encapsulation, abstraction, composition | ABC, DI, Name Mangling | Yes |
 | [library-oop](library-oop/) | Library management system (OOP exercise) | Inheritance, Composition | Yes |
+| [parkinglot](parkinglot/) | Multi-floor parking lot with pluggable pricing and payments | Strategy Pattern, Factory Pattern, Composition | Yes |
 
 ## Quick Start
 
@@ -31,6 +32,7 @@ lld-projects/
 ├── awslocker/
 ├── library-oop/
 ├── oop-examples/
+├── parkinglot/
 ├── ratelimiter/
 ├── ridesharing/
 └── README.md
