@@ -1,41 +1,69 @@
-from .book import Book
-from .member import Member
-from .librarian import Librarian
-from .library import Library
+from datetime import datetime, timedelta
+
+from models.book import Book
+from models.loan import Loan
+from models.member import Member
+from services.library import LibraryService
+from strategies.premium import PremiumPenalty
 
 
 def main():
-    lib = Library()
+    library = LibraryService(penalty_strategy=PremiumPenalty(daily_rate=1.0))
 
-    book1 = Book(1, "1984", "George Orwell", 1949, "Dystopian", 3)
-    book2 = Book(2, "To Kill a Mockingbird", "Harper Lee", 1960, "Fiction", 2)
-    lib.add_book(book1)
-    lib.add_book(book2)
+    # Add books and members
+    clean_code = Book("Clean Code", "Robert Martin", "978-0132350884")
+    dune = Book("Dune", "Frank Herbert", "978-0441172719")
+    library.add_book(clean_code)
+    library.add_book(dune)
 
-    librarian = Librarian(1, "Alice", "alice@lib.com", library=lib)
-    lib.add_librarian(librarian)
+    alice = Member("Alice", "M001")
+    bob = Member("Bob", "M002")
+    library.add_member(alice)
+    library.add_member(bob)
 
-    book3 = Book(3, "The Great Gatsby", "F. Scott Fitzgerald", 1925, "Classic", 1)
-    librarian.add_book(book3)
+    # Search
+    print("Search 'clean':", [b.title for b in library.search_by_title("clean")])
 
-    member = Member(1, "Bob", "bob@email.com", member_id=101)
-    lib.add_member(member)
+    # Checkout
+    loan = library.checkout_book("M001", "978-0132350884")
+    print("Alice checked out:", loan.book_isbn, "due:", loan.due_date.date())
 
-    print("Available books:", lib.list_books())
-    print()
+    # Bob tries to check out the same (loaned) book -> fails, so he reserves it
+    print("Bob checkout while loaned:", library.checkout_book("M002", "978-0132350884"))
+    print("Bob reserved:", library.reserve_book("M002", "978-0132350884"))
 
-    lib.borrow_book(101, 1)
-    print(f"{member.name} borrowed: {[b.title for b in member.borrowed_books]}")
-    print(f"Copies of '1984' remaining: {book1.total_copies}")
-    print()
+    # Alice returns -> fine computed, reservation queue keeps book RESERVED for Bob
+    result = library.return_book("M001", "978-0132350884")
+    print(
+        "Return -> days_overdue:",
+        result["days_overdue"],
+        "| fine:",
+        result["fine"],
+        "| status now:",
+        clean_code.status.value,
+    )
 
-    lib.return_book(101, 1)
-    print(f"Copies of '1984' after return: {book1.total_copies}")
-    print(f"{member.name} borrowed: {[b.title for b in member.borrowed_books]}")
-    print()
+    # Bob picks up his reserved copy
+    loan_bob = library.checkout_book("M002", "978-0132350884")
+    print("Bob picked up reserved book:", loan_bob is not None)
 
-    print("Librarians:", lib.list_librarians())
-    print("Members:", lib.list_members())
+    # Simulate an overdue return to show fines (backdated loan)
+    overdue_loan = Loan(
+        book_isbn="978-0441172719",
+        member_id="M002",
+        issue_date=datetime.now() - timedelta(days=25),
+        due_date=datetime.now() - timedelta(days=11),
+    )
+    bob.add_loan(overdue_loan)
+    result = library.return_book("M002", "978-0441172719")
+    print(
+        "Overdue return -> days_overdue:",
+        result["days_overdue"],
+        "| fine:",
+        result["fine"],
+        "| Bob unpaid fines:",
+        bob.get_unpaid_fines(),
+    )
 
 
 if __name__ == "__main__":
