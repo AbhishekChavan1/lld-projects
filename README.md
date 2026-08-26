@@ -13,6 +13,7 @@ A collection of Low-Level Design (LLD) mini-projects in Python, each demonstrati
 | [oop-examples](oop-examples/) | OOP principle demos: encapsulation, abstraction, composition | ABC, DI, Name Mangling | Yes |
 | [library-oop](library-oop/) | Library management system (OOP exercise) | Inheritance, Composition | Yes |
 | [parkinglot](parkinglot/) | Multi-floor parking lot with pluggable pricing and payments | Strategy Pattern, Factory Pattern, Composition | Yes |
+| [design-patterns](design-patterns/) | Singleton & Prototype pattern implementations with LLD examples | Singleton, Prototype | Yes |
 
 ## Quick Start
 
@@ -35,6 +36,7 @@ lld-projects/
 ├── parkinglot/
 ├── ratelimiter/
 ├── ridesharing/
+├── design-patterns/
 └── README.md
 ```
 
