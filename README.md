@@ -15,6 +15,7 @@ A collection of Low-Level Design (LLD) mini-projects in Python, each demonstrati
 | [library-oop](library-oop/) | Library management system (OOP exercise) | Inheritance, Composition, Strategy Pattern | Yes (14) |
 | [parkinglot](parkinglot/) | Multi-floor parking lot with pluggable pricing and payments | Strategy Pattern, Factory Pattern, Composition | Yes (20) |
 | [design-patterns](design-patterns/) | Creational patterns: Singleton, Prototype, Object Pool, Factory | Singleton, Prototype, Object Pool, Factory | Yes (52) |
+| [design-patterns-structural](design-patterns-structural/) | Third-party payment/notification SDKs behind own interfaces | Adapter (Object & Class), Ports & Adapters | Yes (169) |
 | [vending machine](vending%20machine/) | Vending machine with greedy change and refund-on-failure | State Pattern, Greedy Algorithm, Locking | Yes (45) |
 | [coffee-machine](coffee-machine/) | Configurable beverage machine with ingredient tracking | Decorator Pattern, State Pattern, RLock | Yes (51) |
 | [srp](srp/) | Order placement split into single-responsibility collaborators | SRP, Strategy Pattern, DI | Yes (35) |
@@ -45,6 +46,7 @@ lld-projects/
 ├── awslocker/           # Dataclasses + service layer
 ├── coffee-machine/      # Decorator + State
 ├── design-patterns/     # Creational patterns
+├── design-patterns-structural/  # Structural patterns (Adapter)
 ├── dip/                 # SOLID: dependency inversion
 ├── isp/                 # SOLID: interface segregation
 ├── library-oop/         # Encapsulation + composition
@@ -71,4 +73,4 @@ lld-projects/
 
 ## Status
 
-All 16 projects ship with tests: **511 passing, 0 failing**.
+All 17 projects ship with tests: **680 passing, 0 failing**.
