@@ -1,9 +1,10 @@
 from enum import Enum
 
+from models.transactiontypes import TransactionType
+from models.transactions import Transaction
+
 from .card_reader import CardReader
 from .cash_dispenser import CashDispenser
-from ..models.transactions import Transaction
-from ..models.transactiontypes import TransactionType
 
 class ATMState(Enum):
     IDLE="idle"

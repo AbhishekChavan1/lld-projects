@@ -1,7 +1,8 @@
+from core.atm import ATM
+from models.account import Account
+from models.card import Card
+
 from .bank import Bank
-from ..models.account import Account
-from ..models.card import Card
-from ..core.atm import ATM
 
 
 class ATMService:

@@ -1,15 +1,15 @@
 import pytest
 
-from awslocker.models.enums import LockerSize, LockerStatus, PackageStatus
-from awslocker.models.locker import Locker
-from awslocker.models.locker_location import LockerLocation
-from awslocker.models.package import Package
-from awslocker.services.exceptions import (
+from models.enums import LockerSize, LockerStatus, PackageStatus
+from models.locker import Locker
+from models.locker_location import LockerLocation
+from models.package import Package
+from services.exceptions import (
     InvalidPickupCodeError,
     LockerUnavailableError,
     PackageNotRegisteredError,
 )
-from awslocker.services.locker import LockerService
+from services.locker import LockerService
 
 
 @pytest.fixture

@@ -71,10 +71,21 @@ class TestParkingFloor:
 
     def test_available_count_after_parking(self):
         floor = ParkingFloor(1)
+        occupied = ParkingSpot("A1", SpotType.COMPACT)
+        floor.add_parking_spot(occupied)
+        floor.add_parking_spot(ParkingSpot("A2", SpotType.COMPACT))
+        occupied.park_vehicle(Car("X"))
+        assert floor.get_available_count() == 1
+        assert floor.get_total_count() == 2
+        assert occupied not in floor.get_available_spots()
+
+    def test_available_count_is_zero_when_fully_occupied(self):
+        floor = ParkingFloor(1)
         spot = ParkingSpot("A1", SpotType.COMPACT)
         floor.add_parking_spot(spot)
         spot.park_vehicle(Car("X"))
-        assert floor.get_available_count() == 1
+        assert floor.get_available_count() == 0
+        assert floor.get_available_spots() == []
 
 
 class TestParkingLot:
