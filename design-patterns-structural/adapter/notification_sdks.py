@@ -20,6 +20,17 @@ with a status string, versus an integer errno.
 """
 from __future__ import annotations
 
+from typing import TypedDict
+
+
+class SmsResponse(TypedDict):
+    """Shape of the dict this SMS gateway returns for every send attempt."""
+
+    sid: str
+    status: str
+    error: str | None
+    sender: str
+
 
 class SmsDeliveryError(Exception):
     """Raised when the SMS gateway itself is misused (bad number, etc.)."""
@@ -40,7 +51,7 @@ class LegacySmsSdk:
 
     def send_text(
         self, to_number: str, body: str, sender_id: str | None = None
-    ) -> dict:
+    ) -> SmsResponse:
         if not to_number.startswith("+") or len(to_number) < 8:
             raise SmsDeliveryError(f"Not an E.164 number: {to_number!r}")
         if not body:
@@ -56,6 +67,7 @@ class LegacySmsSdk:
                 "sid": f"SM{self._sequence:08d}",
                 "status": "failed",
                 "error": "MESSAGE_TOO_LONG",
+                "sender": sender_id or self._account_sid,
             }
         return {
             "sid": f"SM{self._sequence:08d}",

@@ -16,6 +16,26 @@ The adapter's job is to flatten two incompatible error conventions
 """
 from __future__ import annotations
 
+from typing import TypedDict
+
+
+class AcquirerPayment(TypedDict):
+    """Shape of the dict this vendor returns when creating a payment."""
+
+    payment_id: str
+    status: str
+    failure_reason: str | None
+    metadata: dict[str, str]
+
+
+class AcquirerRefund(TypedDict):
+    """Shape of the dict this vendor returns for a refund."""
+
+    refund_id: str
+    payment_id: str
+    status: str
+    amount_minor: int | None
+
 
 class AcquirerError(Exception):
     """Transport/protocol failure. Carries a machine-readable reason."""
@@ -40,8 +60,8 @@ class ModernAcquirerSdk:
         self.calls: list[str] = []
 
     def create_payment(
-        self, amount_minor: int, currency: str, metadata: dict | None = None
-    ) -> dict:
+        self, amount_minor: int, currency: str, metadata: dict[str, str] | None = None
+    ) -> AcquirerPayment:
         """Create a payment. Raises AcquirerError instead of returning a code."""
         if not self.transport_ok:
             raise AcquirerError("Connection reset by peer", code="transport_error")
@@ -67,7 +87,9 @@ class ModernAcquirerSdk:
             "metadata": metadata or {},
         }
 
-    def refund_payment(self, payment_id: str, amount_minor: int | None = None) -> dict:
+    def refund_payment(
+        self, payment_id: str, amount_minor: int | None = None
+    ) -> AcquirerRefund:
         if not self.transport_ok:
             raise AcquirerError("Connection reset by peer", code="transport_error")
         if not payment_id.startswith("acq_"):

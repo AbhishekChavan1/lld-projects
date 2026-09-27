@@ -16,6 +16,25 @@ None of this may leak past the adapter. See ``payment_adapters.PayPalAdapter``.
 """
 from __future__ import annotations
 
+from typing import TypedDict
+
+
+class PayPalCharge(TypedDict):
+    """Shape of the dict this vendor returns for a charge."""
+
+    id: str
+    state: str
+    err: str | None
+    note: str
+
+
+class PayPalRefund(TypedDict):
+    """Shape of the dict this vendor returns for a refund."""
+
+    id: str
+    state: str
+    err: str | None
+
 
 class LegacySdkError(Exception):
     """Raised for misuse of the SDK (not for declined payments)."""
@@ -55,7 +74,7 @@ class LegacyPayPalSdk:
 
     def charge_cents(
         self, cents: int, currency_code: str, note: str = ""
-    ) -> dict:
+    ) -> PayPalCharge:
         """Charge an integer number of minor units.
 
         Returns a dict shaped like::
@@ -82,7 +101,7 @@ class LegacyPayPalSdk:
             }
         return {"id": txn_id, "state": "COMPLETED", "err": None, "note": note}
 
-    def revert(self, charge_id: str) -> dict:
+    def revert(self, charge_id: str) -> PayPalRefund:
         """Refund a previous charge. Requires the exact vendor id."""
         self._require_auth()
         if not charge_id.startswith("PPTXN-"):

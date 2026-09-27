@@ -11,6 +11,8 @@ minor-unit scale, no auth handshake, and no vendor exception type.
 """
 from __future__ import annotations
 
+from typing import TypedDict
+
 from .acquirer_sdk import ModernAcquirerSdk
 from .legacy_paypal_sdk import LegacyPayPalSdk
 from .notification_sdks import LegacySmsSdk, SmtpRelay
@@ -22,6 +24,25 @@ from .payment_adapters import (
     SmsSenderAdapter,
 )
 from .ports import NotificationSender, PaymentGateway, PaymentStatus
+
+
+class CheckoutOutcome(TypedDict):
+    """Result of a checkout attempt. Typed, so callers get real field types."""
+
+    ok: bool
+    status: str
+    transaction_id: str
+    reason: str | None
+    notified: bool
+
+
+class RefundOutcome(TypedDict):
+    """Result of a refund attempt."""
+
+    ok: bool
+    status: str
+    transaction_id: str
+    reason: str | None
 
 
 class GatewayRegistry:
@@ -87,7 +108,7 @@ class CheckoutService:
 
     def checkout(
         self, recipient: str, amount: float, currency: str, reference: str
-    ) -> dict:
+    ) -> CheckoutOutcome:
         result = self._gateway.charge(amount, currency, reference)
 
         if not result.is_approved:
@@ -110,7 +131,7 @@ class CheckoutService:
             "notified": notification.delivered,
         }
 
-    def refund(self, transaction_id: str) -> dict:
+    def refund(self, transaction_id: str) -> RefundOutcome:
         result = self._gateway.refund(transaction_id)
         return {
             "ok": result.status is PaymentStatus.APPROVED,

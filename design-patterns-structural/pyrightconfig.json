@@ -1,0 +1,25 @@
+{
+  "include": ["adapter", "bridge", "main.py"],
+  "exclude": ["**/__pycache__", ".pytest_cache"],
+  "typeCheckingMode": "strict",
+  "pythonVersion": "3.10",
+  "reportMissingTypeStubs": "none",
+  "reportUnusedImport": "error",
+  "reportUnusedVariable": "error",
+  "reportUnnecessaryTypeIgnoreComment": "error",
+  "reportRedeclaration": "error",
+  "reportIncompatibleMethodOverride": "error",
+  "reportIncompatibleVariableOverride": "error",
+  "executionEnvironments": [
+    {
+      "root": "tests",
+      "diagnosticSeverityOverrides": {
+        "reportMissingParameterType": "none",
+        "reportUnknownParameterType": "none",
+        "reportUnknownArgumentType": "none",
+        "reportUnknownVariableType": "none",
+        "reportUnknownMemberType": "none"
+      }
+    }
+  ]
+}
