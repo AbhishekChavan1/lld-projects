@@ -6,13 +6,14 @@ A collection of Low-Level Design (LLD) mini-projects in Python, each demonstrati
 
 | Project | Description | Design Patterns | Tests |
 |---------|-------------|-----------------|-------|
-| [atm](atm/) | ATM machine simulation with card/PIN auth, withdrawals, deposits | State Pattern, Composition | Yes |
-| [awslocker](awslocker/) | Amazon Hub Locker assignment and pickup system | Dataclass Modeling, Service Layer | Yes |
-| [ratelimiter](ratelimiter/) | Thread-safe rate-limiting library with multiple algorithms | Strategy Pattern, ABC | Yes |
-| [ridesharing](ridesharing/) | Ride-hailing system with pluggable matching and pricing | Strategy Pattern, State Machine, Decorator | Yes |
-| [oop-examples](oop-examples/) | OOP principle demos: encapsulation, abstraction, composition | ABC, DI, Name Mangling | Yes |
-| [library-oop](library-oop/) | Library management system (OOP exercise) | Inheritance, Composition, Strategy Pattern | Yes |
-| [parkinglot](parkinglot/) | Multi-floor parking lot with pluggable pricing and payments | Strategy Pattern, Factory Pattern, Composition | Yes |
+| [atm](atm/) | ATM machine simulation with card/PIN auth, withdrawals, deposits | State Pattern, Composition | Yes (10) |
+| [awslocker](awslocker/) | Amazon Hub Locker assignment and pickup system | Dataclass Modeling, Service Layer | Yes (8) |
+| [ratelimiter](ratelimiter/) | Thread-safe rate-limiting library with multiple algorithms | Strategy Pattern, ABC | Yes (14) |
+| [ridesharing](ridesharing/) | Ride-hailing system with pluggable matching and pricing | Strategy Pattern, State Machine, Decorator | Yes (16) |
+| [snake_ladder](snake_ladder/) | Snake & ladder with pluggable dice and validated board | Strategy Pattern, FIFO Turn Queue | Yes (27) |
+| [oop-examples](oop-examples/) | OOP principle demos: encapsulation, abstraction, composition | ABC, DI, Name Mangling | Yes (116) |
+| [library-oop](library-oop/) | Library management system (OOP exercise) | Inheritance, Composition, Strategy Pattern | Yes (14) |
+| [parkinglot](parkinglot/) | Multi-floor parking lot with pluggable pricing and payments | Strategy Pattern, Factory Pattern, Composition | Yes (20) |
 | [design-patterns](design-patterns/) | Creational patterns: Singleton, Prototype, Object Pool, Factory | Singleton, Prototype, Object Pool, Factory | Yes (52) |
 | [vending machine](vending%20machine/) | Vending machine with greedy change and refund-on-failure | State Pattern, Greedy Algorithm, Locking | Yes (45) |
 | [coffee-machine](coffee-machine/) | Configurable beverage machine with ingredient tracking | Decorator Pattern, State Pattern, RLock | Yes (51) |
@@ -67,3 +68,7 @@ lld-projects/
 - snake_case for files and functions
 - PascalCase for classes
 - Each project has its own `README.md` with details
+
+## Status
+
+All 16 projects ship with tests: **511 passing, 0 failing**.
